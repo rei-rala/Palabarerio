@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+header,
+section,
+button,
+a,
+input {
+  transition: all 0.5s;
+}

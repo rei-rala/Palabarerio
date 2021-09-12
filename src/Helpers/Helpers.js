@@ -1,0 +1,1 @@
+export const arrRandomItem = (array) => array[Math.floor(Math.random() * array.length)];

@@ -1,12 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import ThemeContext from './contexts/Theme'
+import UserSessionContext from './contexts/UserSession'
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <UserSessionContext>
+      <ThemeContext>
+        <App />
+      </ThemeContext>
+    </UserSessionContext>
   </React.StrictMode>,
   document.getElementById('root')
 );
