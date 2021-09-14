@@ -3,7 +3,7 @@ import { Theme } from "../../../contexts/Theme";
 
 import PalabrerioFieldStyled from "./PalabrerioFieldStyled";
 
-const PalabrerioField = ({ seriesWords, order, currentCharacter, nextCharacter, currentWord, addError }) => {
+const PalabrerioField = ({ order, currentCharacter, nextCharacter, currentWord, addPartialCharCount, addCharCount, addError, animOnError }) => {
   const { isDarkMode } = useContext(Theme);
 
 
@@ -15,16 +15,18 @@ const PalabrerioField = ({ seriesWords, order, currentCharacter, nextCharacter, 
     const val = {
       typed: e.nativeEvent.data,
       expected: currentCharacter,
-      currentWord: currentWord
+      currentWord: currentWord,
+      wordIndex: order
     }
 
-    console.table(val)
+    //console.table(val)
     if (val.typed === val.expected) {
       if (val.expected === ' ') {
         setInputValue('')
       } else {
         setInputValue(inputValue + val.typed)
       }
+      addPartialCharCount()
       nextCharacter()
     }
     else {
@@ -36,13 +38,14 @@ const PalabrerioField = ({ seriesWords, order, currentCharacter, nextCharacter, 
   return (
     <>
       <PalabrerioFieldStyled
+        className={animOnError && 'error'}
         type="text"
         onChange={typeHandling}
         isDarkMode={isDarkMode}
         placeholder="Comience a escribir..."
         value={inputValue}
       />
-      Current {seriesWords[order.wordNo][order.charNo]}
+      Current {currentCharacter === ' ' ? '[ espacio ]' : currentCharacter}
     </>
   );
 };

@@ -9,7 +9,6 @@ import Login from './components/Sections/Login/Login'
 import Logout from './components/Sections/Logout/Logout'
 import Palabrerio from './components/Palabrerio/Palabrerio'
 
-
 const App = () => {
   const { userInfo: { isUserLoggedIn } } = useContext(UserSession)
 
@@ -18,7 +17,6 @@ const App = () => {
 
       <Header isLogged={isUserLoggedIn} theme={Theme} />
       <Palabrerio />
-
       {/* {
         isUserLoggedIn
           ? <>

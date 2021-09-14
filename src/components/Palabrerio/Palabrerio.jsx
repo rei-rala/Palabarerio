@@ -1,9 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Theme } from "../../contexts/Theme";
 import SectionStyled from "../Sections/SectionStyled";
+
+import PalabrerioSummary from './PalabrerioSummary/PalabrerioSummary'
 import PalabrerioWordWindow from "./PalabrerioWordWindow/PalabrerioWordWindow";
 import PalabrerioField from "./PalabrerioField/PalabrerioField";
 import { arrRandomItem } from "../../Helpers/Helpers";
+
+import UserConfig from "../UserConfig/UserConfig";
 
 const Palabrerio = () => {
   const { isDarkMode } = useContext(Theme);
@@ -25,12 +29,19 @@ const Palabrerio = () => {
       setOrder({ wordNo: order.wordNo, charNo: order.charNo + 1 });
     } else {
       setOrder({ wordNo: order.wordNo + 1, charNo: 0 });
+      addCharCount()
       addNewWord();
     }
   };
 
+  const [partialCharCount, setPartialCharCount] = useState(0)
+  const addPartialCharCount = () => setPartialCharCount(partialCharCount + 1)
+
   const [charCount, setCharCount] = useState(0);
-  const addCharCount = () => setCharCount(charCount + 1);
+  const addCharCount = () => {
+    setCharCount(charCount + partialCharCount)
+    setPartialCharCount(0)
+  };
 
   const [errors, setErrors] = useState([]);
   const addError = (newError) =>
@@ -40,8 +51,13 @@ const Palabrerio = () => {
         typed: newError.typed,
         expected: newError.expected,
         word: newError.currentWord,
+        wordIndex: newError.wordIndex
       },
     ]);
+
+  const [indexOfErrors, setIndexOfErrors] = useState([])
+  const [animOnError, setAnimOnError] = useState(false)
+
 
   useEffect(() => {
     setCurrentCharacter(seriesWords[order.wordNo][order.charNo]);
@@ -50,29 +66,50 @@ const Palabrerio = () => {
     seriesWords[order.wordNo + 1] && setNextWords(seriesWords.slice(order.wordNo + 1))
   }, [order, seriesWords]);
 
+  useEffect(() => {
+    const indexList = Array.from(new Set(errors.map(e => e.wordIndex)))
+    setIndexOfErrors(indexList)
+    setAnimOnError(true)
+
+    const desactiva_anim = setTimeout(() => {
+      setAnimOnError(false)
+    }, 500)
+    return () => {
+      clearTimeout(desactiva_anim)
+    }
+  }, [errors])
 
   return (
+
     <SectionStyled isDarkMode={isDarkMode}>
-      Cantidad Palabras: {prevWords.length}
-      Errores: {errors.length}
+      <PalabrerioSummary
+        partialCharCount={partialCharCount}
+        charCount={charCount}
+        prevWordsCount={prevWords.length}
+        errorCount={errors.length}
+      />
+
       <PalabrerioWordWindow
-        seriesWords={seriesWords}
+        order={order}
         currentWord={currentWord}
         prevWords={prevWords}
         nextWords={nextWords}
-        order={order}
         currentCharacter={currentCharacter}
+        indexOfErrors={indexOfErrors}
+        animOnError={animOnError}
       />
       <PalabrerioField
-        seriesWords={seriesWords}
         order={order}
         currentCharacter={currentCharacter}
         nextCharacter={nextCharacter}
-        charCount={charCount}
         addCharCount={addCharCount}
+        addPartialCharCount={addPartialCharCount}
         currentWord={currentWord}
         addError={addError}
+        animOnError={animOnError}
       />
+
+      <UserConfig />
     </SectionStyled>
   );
 };
