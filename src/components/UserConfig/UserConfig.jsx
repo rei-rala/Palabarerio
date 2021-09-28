@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserSession } from '../../contexts/UserSession'
 
 import ConfigPreview from './ConfigPreview/ConfigPreview'
 import ConfigForm from './ConfigForm/ConfigForm'
 import { Theme } from '../../contexts/Theme'
+import SectionStyled from '../Sections/SectionStyled'
 
 const UserConfig = () => {
   const { userInfo: { theme } } = useContext(UserSession)
@@ -12,12 +13,17 @@ const UserConfig = () => {
   const [fontPreview, setFontPreview] = useState('consolas')
   const [fontSizePreview, setSizeFontPreview] = useState(1)
   const [colorPreview, setColorPreview] = useState('red')
-  const [darkThemePreview, setDarkThemePreview] = useState(theme.darkTheme || false)
+  const [darkThemePreview, setDarkThemePreview] = useState(false)
 
+  useEffect(() => {
+    theme?.darkTheme && setDarkThemePreview(theme.darkTheme)
+  }, [theme])
 
 
   return (
-    <div className="asd">
+    <SectionStyled isDarkMode={theme?.darkTheme}>
+      <h2>Configuracion del theme</h2>
+
       <ConfigPreview
         fontPreview={fontPreview}
         colorPreview={colorPreview}
@@ -28,7 +34,7 @@ const UserConfig = () => {
         defaultFF={theme['font-family']}
         defaultFS={theme['font-size']}
         defaultCo={theme['color']}
-        defaultDT={theme['darkTheme']}
+        defaultDT={darkThemePreview}
 
         changeUserTheme={changeUserTheme}
         setFontPreview={setFontPreview}
@@ -36,7 +42,8 @@ const UserConfig = () => {
         setSizeFontPreview={setSizeFontPreview}
         setDarkThemePreview={setDarkThemePreview}
       />
-    </div>
+    </SectionStyled>
+
   )
 }
 

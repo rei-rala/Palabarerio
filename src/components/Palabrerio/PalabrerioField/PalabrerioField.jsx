@@ -1,21 +1,23 @@
 import React, { useContext, useState } from "react";
 import { Theme } from "../../../contexts/Theme";
+import { UserSession } from "../../../contexts/UserSession";
 
 import PalabrerioFieldStyled from "./PalabrerioFieldStyled";
 
-const PalabrerioField = ({ order, currentCharacter, nextCharacter, currentWord, addPartialCharCount, addCharCount, addError, animOnError }) => {
+const PalabrerioField = ({ order, currentCharacter, nextCharacter, currentWord, addPartialCharCount, addError, animOnError }) => {
   const { isDarkMode } = useContext(Theme);
+  const userInfo = useContext(UserSession)
 
 
   const [inputValue, setInputValue] = useState('')
-
 
   const typeHandling = (e) => {
     e.preventDefault()
     const val = {
       typed: e.nativeEvent.data,
       expected: currentCharacter,
-      currentWord: currentWord,
+      prevChar: currentWord[order.charNo - 1] ?? ' ',
+      currentWord,
       wordIndex: order
     }
 
@@ -36,17 +38,15 @@ const PalabrerioField = ({ order, currentCharacter, nextCharacter, currentWord, 
 
 
   return (
-    <>
-      <PalabrerioFieldStyled
-        className={animOnError && 'error'}
-        type="text"
-        onChange={typeHandling}
-        isDarkMode={isDarkMode}
-        placeholder="Comience a escribir..."
-        value={inputValue}
-      />
-      Current {currentCharacter === ' ' ? '[ espacio ]' : currentCharacter}
-    </>
+    <PalabrerioFieldStyled
+      className={animOnError && 'error'}
+      type="text"
+      onChange={typeHandling}
+      isDarkMode={isDarkMode}
+      color={userInfo?.theme?.color ?? 'white'}
+      placeholder="Comience a escribir..."
+      value={inputValue}
+    />
   );
 };
 

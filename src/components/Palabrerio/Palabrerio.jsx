@@ -5,9 +5,9 @@ import SectionStyled from "../Sections/SectionStyled";
 import PalabrerioSummary from './PalabrerioSummary/PalabrerioSummary'
 import PalabrerioWordWindow from "./PalabrerioWordWindow/PalabrerioWordWindow";
 import PalabrerioField from "./PalabrerioField/PalabrerioField";
+import PalabrerioCurrentChar from "./PalabrerioCurrentChar/PalabrerioCurrentChar"
 import { arrRandomItem } from "../../Helpers/Helpers";
 
-import UserConfig from "../UserConfig/UserConfig";
 
 const Palabrerio = () => {
   const { isDarkMode } = useContext(Theme);
@@ -91,10 +91,10 @@ const Palabrerio = () => {
 
       <PalabrerioWordWindow
         order={order}
+        currentCharacter={currentCharacter}
         currentWord={currentWord}
         prevWords={prevWords}
         nextWords={nextWords}
-        currentCharacter={currentCharacter}
         indexOfErrors={indexOfErrors}
         animOnError={animOnError}
       />
@@ -102,14 +102,12 @@ const Palabrerio = () => {
         order={order}
         currentCharacter={currentCharacter}
         nextCharacter={nextCharacter}
-        addCharCount={addCharCount}
-        addPartialCharCount={addPartialCharCount}
         currentWord={currentWord}
+        addPartialCharCount={addPartialCharCount}
         addError={addError}
         animOnError={animOnError}
       />
-
-      <UserConfig />
+      <PalabrerioCurrentChar currentCharacter={currentCharacter} />
     </SectionStyled>
   );
 };

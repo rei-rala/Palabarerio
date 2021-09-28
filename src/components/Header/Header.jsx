@@ -1,19 +1,16 @@
 import React, { useContext } from 'react'
-import { Theme } from '../../contexts/Theme'
-import Button from '../Button/Button'
+import { UserSession } from '../../contexts/UserSession'
 import HeaderStyled from './HeaderStyled'
+import Logo from './Logo/Logo'
+import Nav from './Nav/Nav'
 
 const Header = () => {
-  const { isDarkMode, toggleDarkMode } = useContext(Theme)
+  const { userInfo: { theme } } = useContext(UserSession)
+
   return (
-    <HeaderStyled isDarkMode={isDarkMode}>
-      Palabrerio!
-
-      <Button onClick={toggleDarkMode}>
-        Testeate el theme
-      </Button>
-
-
+    <HeaderStyled theme={theme}>
+      <Logo />
+      <Nav />
     </HeaderStyled>
   )
 }

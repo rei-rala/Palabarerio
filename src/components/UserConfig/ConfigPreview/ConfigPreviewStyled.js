@@ -11,8 +11,8 @@ const ConfigPreviewStyled = styled.div`
   
   overflow-y:hidden;
 
-  color: ${props => props.darkTheme ? 'black' : 'white'} !important;
-  background-color: ${props => props.darkTheme ? 'white' : '#222'} !important;
+  color: ${props => props.darkTheme ? 'white' : 'black'} !important;
+  background-color: ${props => props.darkTheme ? '#222' : 'white'} !important;
 
   .wrongWordPreview {
     color: red;

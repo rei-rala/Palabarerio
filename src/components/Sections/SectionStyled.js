@@ -8,6 +8,8 @@ const SectionStyled = styled.section`
   color: ${props => props.isDarkMode ? 'white' : 'black'}; 
   background-color: ${props => props.isDarkMode ? '#222' : 'white'};
 
+
+
   strong {
     transition: all 0.25s;
   }

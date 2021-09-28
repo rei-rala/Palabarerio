@@ -10,16 +10,16 @@ const UserSessionContext = ({ children }) => {
     theme: {
       color: 'red',
       'font-family': 'consolas',
-      'font-size': '1rem',
+      'font-size': '1',
       darkTheme: true
     }
   })
 
-
-  useEffect(() => {
-    console.table(userInfo)
-
-  }, [userInfo])
+  /* 
+    useEffect(() => {
+      console.table(userInfo)
+  
+    }, [userInfo]) */
 
   return <UserSession.Provider value={{
     userInfo,

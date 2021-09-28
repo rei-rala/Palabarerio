@@ -16,19 +16,19 @@ const ConfigForm = ({
 
   const defaultFonts = [
     {
-      name: 'Roboto Mono',
+      fontName: 'Roboto Mono',
       css: `'Roboto Mono', consolas, monospace;`
     },
     {
-      name: 'Syne Mono',
+      fontName: 'Syne Mono',
       css: `'Syne Mono', consolas, monospace;`
     },
     {
-      name: 'Ubuntu Mono',
+      fontName: 'Ubuntu Mono',
       css: `'Ubuntu Mono', consolas, monospace;`
     },
     {
-      name: 'Nova Mono',
+      fontName: 'Nova Mono',
       css: `'Nova Mono', consolas, monospace;`
     }
   ]
@@ -48,7 +48,7 @@ const ConfigForm = ({
   }
 
   const darkThemePreview = (e) => {
-    setDarkThemePreview(!e.target.checked)
+    setDarkThemePreview(e.target.checked)
   }
 
   const saveConfig = (e) => {
@@ -65,14 +65,14 @@ const ConfigForm = ({
   return (
     <form onSubmit={saveConfig}>
       <label htmlFor="darkThemeToggle">Theme oscuro?</label>
-      <input name='newDarkTheme' type="checkbox" id='darkThemeToggle' onChange={darkThemePreview} defaultChecked={defaultDT} />
+      <input name='newDarkTheme' type="checkbox" id='darkThemeToggle' onChange={darkThemePreview} defaultChecked={defaultDT} defaultValue={defaultDT} />
 
       <input name='newColor' type="color" onChange={colorPreview} defaultValue={defaultCo} />
       <select name='newFont' placeholder='Fuente' onChange={fontPreview} defaultValue={defaultFF}>
         <optgroup label="Fuente">
           <option value='consolas'>Default Font</option>
           {
-            defaultFonts.map(m => <option key={m.name} value={m.css}>{m.name}</option>)
+            defaultFonts.map(m => <option key={m.fontName} value={m.css}>{m.fontName}</option>)
           }
         </optgroup>
       </select>

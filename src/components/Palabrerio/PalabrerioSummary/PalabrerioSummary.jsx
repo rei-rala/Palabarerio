@@ -6,8 +6,6 @@ const PalabrerioSummary = ({ partialCharCount, charCount, prevWordsCount, errorC
 
   const { userInfo: { theme: { color } }, } = useContext(UserSession);
 
-  console.log(color)
-
   return (
     <PalabrerioSummaryStyled isPartial={partialCharCount > 0} color={color}>
       <p>Cantidad Caracteres <strong> {partialCharCount ? charCount + partialCharCount : charCount}</strong></p>

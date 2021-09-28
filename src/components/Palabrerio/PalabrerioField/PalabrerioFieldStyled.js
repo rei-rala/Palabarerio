@@ -56,7 +56,7 @@ const PalabrerioFieldStyled = styled.input`
   padding: 5px 10px;
   text-align:center;
 
-  color: ${props => props.isDarkMode ? 'white' : 'black'};
+  color: ${props => props.color ? props.color : 'black'};
   background-color: ${props => props.isDarkMode ? 'black' : 'white'};
   border: 1px solid ${props => props.isDarkMode ? 'white' : 'black'};
   border-radius: 10px;

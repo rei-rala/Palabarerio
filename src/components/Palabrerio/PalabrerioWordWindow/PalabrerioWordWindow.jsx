@@ -55,7 +55,7 @@ const PalabrerioWordWindow = ({
           {nextWords &&
             nextWords.map((w, i) => (
               previewingNextWord && i === 0
-                ? <span />
+                ? <span key={`notInmNextWord`} />
                 : <span className="nextWords" key={`nextWordNo${i}`}>
                   {w}
                 </span>
