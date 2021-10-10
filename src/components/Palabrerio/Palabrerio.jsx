@@ -7,10 +7,12 @@ import PalabrerioWordWindow from "./PalabrerioWordWindow/PalabrerioWordWindow";
 import PalabrerioField from "./PalabrerioField/PalabrerioField";
 import PalabrerioCurrentChar from "./PalabrerioCurrentChar/PalabrerioCurrentChar"
 import { arrRandomItem } from "../../Helpers/Helpers";
+import { Axios } from "../../contexts/Axios";
 
 
 const Palabrerio = () => {
   const { isDarkMode } = useContext(Theme);
+  const { POST } = useContext(Axios)
 
   const DEFAULT_WORDS = ["pri", "seg", "ter", 'cuar', 'qui', 'sex'].map(w => `${w} `);
   const SEGMENTED_WORDS = DEFAULT_WORDS.map((w) => w.split(""));
@@ -44,7 +46,7 @@ const Palabrerio = () => {
   };
 
   const [errors, setErrors] = useState([]);
-  const addError = (newError) =>
+  const addError = async (newError) => {
     setErrors([
       ...errors,
       {
@@ -52,8 +54,15 @@ const Palabrerio = () => {
         expected: newError.expected,
         word: newError.currentWord,
         wordIndex: newError.wordIndex
-      },
-    ]);
+      }
+    ])
+
+    //const parsing = newError
+    newError.charIndex = order.charNo
+    newError.wordIndex = order.wordNo
+
+    process.env.REACT_APP_API_URL && POST(newError)
+  }
 
   const [indexOfErrors, setIndexOfErrors] = useState([])
   const [animOnError, setAnimOnError] = useState(false)

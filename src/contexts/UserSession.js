@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext,  useState } from "react";
 
 
 const UserSession = createContext();
@@ -15,11 +15,6 @@ const UserSessionContext = ({ children }) => {
     }
   })
 
-  /* 
-    useEffect(() => {
-      console.table(userInfo)
-  
-    }, [userInfo]) */
 
   return <UserSession.Provider value={{
     userInfo,

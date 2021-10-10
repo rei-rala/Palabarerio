@@ -11,7 +11,7 @@ const PalabrerioField = ({ order, currentCharacter, nextCharacter, currentWord, 
 
   const [inputValue, setInputValue] = useState('')
 
-  const typeHandling = (e) => {
+  const typeHandling = async (e) => {
     e.preventDefault()
     const val = {
       typed: e.nativeEvent.data,
