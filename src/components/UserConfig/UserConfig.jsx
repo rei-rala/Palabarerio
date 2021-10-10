@@ -1,19 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { UserSession } from '../../contexts/UserSession'
 
 import ConfigPreview from './ConfigPreview/ConfigPreview'
 import ConfigForm from './ConfigForm/ConfigForm'
-import { Theme } from '../../contexts/Theme'
+
 import SectionStyled from '../Sections/SectionStyled'
+import { Theme } from '../../contexts/Theme'
 
 const UserConfig = () => {
-  const { userInfo: { theme } } = useContext(UserSession)
-  const { changeUserTheme } = useContext(Theme)
+  const { theme, setTheme } = useContext(Theme)
 
-  const [fontPreview, setFontPreview] = useState('consolas')
-  const [fontSizePreview, setSizeFontPreview] = useState(1)
-  const [colorPreview, setColorPreview] = useState('red')
-  const [darkThemePreview, setDarkThemePreview] = useState(false)
+  const [fontSizePreview, setSizeFontPreview] = useState(theme['font-size'])
+  const [fontPreview, setFontPreview] = useState(theme['font-family'])
+  const [colorPreview, setColorPreview] = useState(theme.color)
+  const [darkThemePreview, setDarkThemePreview] = useState(theme.darkTheme)
 
   useEffect(() => {
     theme?.darkTheme && setDarkThemePreview(theme.darkTheme)
@@ -31,12 +30,14 @@ const UserConfig = () => {
         darkThemePreview={darkThemePreview}
       />
       <ConfigForm
-        defaultFF={theme['font-family']}
-        defaultFS={theme['font-size']}
-        defaultCo={theme['color']}
+        theme={theme}
+        setTheme={setTheme}
+
+        defaultFF={fontSizePreview}
+        defaultFS={fontPreview}
+        defaultCo={colorPreview}
         defaultDT={darkThemePreview}
 
-        changeUserTheme={changeUserTheme}
         setFontPreview={setFontPreview}
         setColorPreview={setColorPreview}
         setSizeFontPreview={setSizeFontPreview}

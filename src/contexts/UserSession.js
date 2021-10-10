@@ -1,4 +1,4 @@
-import React, { createContext,  useState } from "react";
+import React, { createContext, useState } from "react";
 
 
 const UserSession = createContext();
@@ -6,14 +6,9 @@ const UserSession = createContext();
 const UserSessionContext = ({ children }) => {
   const [userInfo, setUserInfo] = useState({
     isUserLoggedIn: false,
-    userTag: 'Guest',
-    theme: {
-      color: 'red',
-      'font-family': 'consolas',
-      'font-size': '1',
-      darkTheme: true
-    }
+    userTag: 'Guest'
   })
+
 
 
   return <UserSession.Provider value={{

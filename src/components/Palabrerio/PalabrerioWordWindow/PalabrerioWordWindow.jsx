@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { UserSession } from "../../../contexts/UserSession";
 import PalabrerioWordWindowStyled from "./PalabrerioWordWindowStyled";
 import Button from '../../Button/Button'
+import { Theme } from "../../../contexts/Theme";
 
 const PalabrerioWordWindow = ({
   order,
@@ -12,16 +12,20 @@ const PalabrerioWordWindow = ({
   indexOfErrors,
   animOnError,
 }) => {
-  const { userInfo: { theme }, } = useContext(UserSession);
-  const [previewingNextWord, setPreviewNextWord] = useState(false)
-  const togglePreviewNextWord = () => setPreviewNextWord(!previewingNextWord)
+  const { theme, setTheme } = useContext(Theme);
+  const [previewingNextWord, setPreviewNextWord] = useState(theme.previewNext)
+
+  const togglePreviewNextWord = () => {
+    setTheme({ ...theme, previewNext: !theme.previewNext })
+    setPreviewNextWord(!theme.previewNext)
+  }
 
   return (
     <PalabrerioWordWindowStyled
-      color={theme?.color || "red"}
-      fontFamily={(theme && theme["font-family"]) || "consolas"}
-      fontSize={(theme && theme["font-size"]) || 2}
-      isDarkMode={theme?.darkTheme || false}
+      color={theme.color}
+      fontFamily={theme["font-family"]}
+      fontSize={theme["font-size"]}
+      isDarkMode={theme.darkTheme}
       indexOfErrors={indexOfErrors}
     >
       <div className="options">

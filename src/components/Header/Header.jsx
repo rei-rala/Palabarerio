@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
-import { UserSession } from '../../contexts/UserSession'
+import { Theme } from '../../contexts/Theme'
 import HeaderStyled from './HeaderStyled'
 import Logo from './Logo/Logo'
 import Nav from './Nav/Nav'
 
 const Header = () => {
-  const { userInfo: { theme } } = useContext(UserSession)
+  const { theme } = useContext(Theme)
 
   return (
     <HeaderStyled theme={theme}>

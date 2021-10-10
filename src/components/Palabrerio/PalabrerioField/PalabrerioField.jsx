@@ -1,12 +1,10 @@
 import React, { useContext, useState } from "react";
 import { Theme } from "../../../contexts/Theme";
-import { UserSession } from "../../../contexts/UserSession";
 
 import PalabrerioFieldStyled from "./PalabrerioFieldStyled";
 
 const PalabrerioField = ({ order, currentCharacter, nextCharacter, currentWord, addPartialCharCount, addError, animOnError }) => {
-  const { isDarkMode } = useContext(Theme);
-  const userInfo = useContext(UserSession)
+  const { theme } = useContext(Theme);
 
 
   const [inputValue, setInputValue] = useState('')
@@ -42,8 +40,8 @@ const PalabrerioField = ({ order, currentCharacter, nextCharacter, currentWord, 
       className={animOnError && 'error'}
       type="text"
       onChange={typeHandling}
-      isDarkMode={isDarkMode}
-      color={userInfo?.theme?.color ?? 'white'}
+      isDarkMode={theme.darkTheme}
+      color={theme.color}
       placeholder="Comience a escribir..."
       value={inputValue}
     />

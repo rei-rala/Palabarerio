@@ -3,7 +3,8 @@ import React from 'react'
 import Button from '../../Button/Button'
 
 const ConfigForm = ({
-  changeUserTheme,
+  theme,
+  setTheme,
   setFontPreview,
   setColorPreview,
   setSizeFontPreview,
@@ -53,19 +54,24 @@ const ConfigForm = ({
 
   const saveConfig = (e) => {
     e.preventDefault()
+    const config = {
+      color: e.target.newColor.value,
+      'font-family': e.target.newFont.value,
+      'font-size': e.target.newFontSize.value,
+      darkTheme: e.target.newDarkTheme.checked
+    }
 
-    changeUserTheme(
-      e.target.newColor.value, // newColor
-      e.target.newFont.value, // newFontFamily
-      e.target.newFontSize.value, // newFontSize
-      e.target.newDarkTheme.checked // newDarkTheme
-    )
+    localStorage.setItem('themeConfig', JSON.stringify(config))
+
+    setTheme({ ...theme, ...config })
   }
 
   return (
     <form onSubmit={saveConfig}>
       <label htmlFor="darkThemeToggle">Theme oscuro?</label>
-      <input name='newDarkTheme' type="checkbox" id='darkThemeToggle' onChange={darkThemePreview} defaultChecked={defaultDT} defaultValue={defaultDT} />
+      {
+        <input checked={defaultDT ? true : false} name='newDarkTheme' type="checkbox" id='darkThemeToggle' onChange={darkThemePreview} />
+      }
 
       <input name='newColor' type="color" onChange={colorPreview} defaultValue={defaultCo} />
       <select name='newFont' placeholder='Fuente' onChange={fontPreview} defaultValue={defaultFF}>

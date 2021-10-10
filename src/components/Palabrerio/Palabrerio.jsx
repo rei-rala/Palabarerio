@@ -80,17 +80,18 @@ const Palabrerio = () => {
     setIndexOfErrors(indexList)
     setAnimOnError(true)
 
-    const desactiva_anim = setTimeout(() => {
+    const anim = setTimeout(() => {
       setAnimOnError(false)
     }, 500)
     return () => {
-      clearTimeout(desactiva_anim)
+      clearTimeout(anim)
     }
   }, [errors])
 
   return (
 
     <SectionStyled isDarkMode={isDarkMode}>
+
       <PalabrerioSummary
         partialCharCount={partialCharCount}
         charCount={charCount}
@@ -116,7 +117,10 @@ const Palabrerio = () => {
         addError={addError}
         animOnError={animOnError}
       />
-      <PalabrerioCurrentChar currentCharacter={currentCharacter} />
+
+      <PalabrerioCurrentChar
+        currentCharacter={currentCharacter}
+      />
     </SectionStyled>
   );
 };

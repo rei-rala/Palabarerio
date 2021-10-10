@@ -1,35 +1,53 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { UserSession } from "./UserSession";
+import React, { createContext, useEffect, useState } from "react";
 
 
 const Theme = createContext();
 
 const ThemeContext = ({ children }) => {
-  const { userInfo, setUserInfo } = useContext(UserSession)
+  const [theme, setTheme] = useState(
+    JSON.parse(localStorage.getItem('themeConfig'))
+    ?? {
+      color: 'red',
+      'font-family': 'consolas',
+      'font-size': '1',
+      darkTheme: false,
+      previewNext: false
+    }
+  )
 
-  const [isDarkMode, setDarkMode] = useState(userInfo.theme.darkTheme || false)
-
-  const changeUserTheme = (newColor = userInfo.theme.color, newFontFamily = userInfo.theme['font-family'], newFontSize = userInfo.theme['font-size'], newDarkTheme = userInfo.theme.darkTheme) => {
-    setUserInfo(
-      {
-        ...userInfo,
-        theme: {
-          color: newColor,
-          'font-family': newFontFamily,
-          'font-size': newFontSize,
-          darkTheme: newDarkTheme
-        }
-      }
-    )
-  }
+  const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
-    typeof userInfo.theme.darkTheme !== 'undefined' && setDarkMode(userInfo.theme.darkTheme)
-  }, [userInfo.theme.darkTheme])
+    setIsDarkMode(theme.darkTheme)
+  }, [theme.darkTheme])
+
+  useEffect(() => {
+    try {
+      const local = localStorage.getItem('themeConfig')
+      local && setTheme(JSON.parse(local))
+    } catch (err) {
+      console.warn(err)
+      localStorage.removeItem('themeConfig')
+    }
+  }, [setTheme])
+
+  useEffect(() => {
+    try {
+      const local = localStorage.getItem('themeConfig') && JSON.parse(localStorage.getItem('themeConfig'))
+      const hibridConfig = local && { ...local, ...theme }
+      local && localStorage.setItem('themeConfig', JSON.stringify(hibridConfig))
+    }
+    catch (err) {
+      console.log(err)
+    }
+
+  }, [theme])
+
 
   return <Theme.Provider value={{
-    isDarkMode,
-    changeUserTheme
+    theme,
+    setTheme,
+    isDarkMode
   }}>
     {children}
   </Theme.Provider>
